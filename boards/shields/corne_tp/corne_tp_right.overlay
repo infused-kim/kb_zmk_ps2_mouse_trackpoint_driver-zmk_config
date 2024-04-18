@@ -83,7 +83,6 @@
 #define MOUSE_PS2_PIN_SCL_PRO_MICRO <&pro_micro 16 GPIO_ACTIVE_HIGH>
 #define MOUSE_PS2_PIN_SDA_PRO_MICRO <&pro_micro 10 GPIO_ACTIVE_HIGH>
 
-
 // Configure the Power-On-Reset pin
 //
 // Uncomment and configure this pin if you have an extra free pin and want the
@@ -422,6 +421,24 @@
  *          doing.
  */
 
+
+// Firmware with alternative pins
+//
+// This can safely be removed. It's only used in the example zmk-config repo
+// to create an additional firmware with alternative PIN assignments.
+//
+// You can leave it or remove in your own zmk config. If you remove it, you
+// should also remove the entry in `zmk-config-example/build.yaml` that uses
+// it.
+#ifdef MOUSE_PS2_ALT_PINS
+    #undef MOUSE_PS2_PIN_SCL_PRO_MICRO
+    #undef MOUSE_PS2_PIN_SDA_PRO_MICRO
+    #undef MOUSE_PS2_PIN_SDA_PINCTRL
+
+    #define MOUSE_PS2_PIN_SCL_PRO_MICRO <&pro_micro 1 GPIO_ACTIVE_HIGH>
+    #define MOUSE_PS2_PIN_SDA_PRO_MICRO <&pro_micro 0 GPIO_ACTIVE_HIGH>
+    #define MOUSE_PS2_PIN_SDA_PINCTRL <NRF_PSEL(UART_RX, 0, 8)>
+#endif
 
 // This define can be used in the keymap file to check whether the device tree
 // configs in this file are present to void build errors on the side that does

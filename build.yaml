@@ -22,3 +22,24 @@ include:
     shield: corne_tp_left
   - board: nice_nano_v2
     shield: corne_tp_right
+
+  # Alternative PINs firmware
+  # This builds an additional firmware for the right half that overrides the
+  # pins configured in `corne_tp_right.overlay` and creates a firmware that
+  # uses the high frequency pins D1 for SCL and D2 for SDA.
+  #
+  # You can remove this entry in your own zmk-config.
+  - board: nice_nano_v2
+    shield: corne_tp_right
+    cmake-args: -DDTS_EXTRA_CPPFLAGS=-DMOUSE_PS2_ALT_PINS
+    artifact-name: corne_tp_right-nice_nano_v2-scl_D1_sda_D0-zmk
+
+  # Settings Reset firmware
+  # This will build a firmware that can wipe all settings from your
+  # controller. It's useful when you have bluetooth issues or when your split
+  # keyboard halfs are not pairing.
+  #
+  # More info:
+  # https://zmk.dev/docs/troubleshooting#split-keyboard-halves-unable-to-pair
+  - board: nice_nano_v2
+    shield: settings_reset

@@ -1,5 +1,18 @@
 #include <dt-bindings/led/led.h>
 
+// Firmware with alternative pins
+//
+// The #ifndef statement can safely be removed. It's only used in the example
+// zmk-config repo to create an additional firmware with alternative PIN
+// assignments, but since the alternative pins conflict with the underglow
+// pins, we disable it here.
+//
+// You can leave it or remove in your own zmk config. If you remove it, you
+// should also remove the entry in `zmk-config-example/build.yaml` that uses
+// it.
+
+#ifndef MOUSE_PS2_ALT_PINS
+
 &pinctrl {
     spi3_default: spi3_default {
         group1 {
@@ -44,3 +57,5 @@
         zmk,underglow = &led_strip;
     };
 };
+
+#endif  // MOUSE_PS2_ALT_PINS
