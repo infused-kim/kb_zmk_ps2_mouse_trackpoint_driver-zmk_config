@@ -1,0 +1,5 @@
+# OS Files
+.DS_Store
+
+# Temporary files
+keymap_img/keymap.yaml
