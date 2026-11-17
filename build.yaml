@@ -20,8 +20,10 @@
 include:
   - board: nice_nano_v2
     shield: corne_tp_left
+    snippet: zmk-usb-logging
   - board: nice_nano_v2
     shield: corne_tp_right
+    snippet: zmk-usb-logging
 
   # Alternative PINs firmware
   # This builds an additional firmware for the right half that overrides the
@@ -31,6 +33,7 @@ include:
   # You can remove this entry in your own zmk-config.
   - board: nice_nano_v2
     shield: corne_tp_right
+    snippet: zmk-usb-logging
     cmake-args: -DDTS_EXTRA_CPPFLAGS=-DMOUSE_PS2_ALT_PINS
     artifact-name: corne_tp_right-nice_nano_v2-scl_D1_sda_D0-zmk
 

@@ -3,6 +3,8 @@
   #include <dt-bindings/zmk/mouse_settings.h>
   #include <behaviors/mouse_keys.dtsi>
   #include <behaviors/mouse_setting.dtsi>
+  #include <input/processors.dtsi>
+  #include <dt-bindings/zmk/input_transform.h>
 
  /*
   * Key Behaviors to adjust settings
@@ -74,27 +76,26 @@
     * Input Listener Config
     */
 
+    // Uses ZMK's input processors. See:
+    // https://zmk.dev/docs/keymaps/input-processors
+
+    // Require this much time since the last key press before the layer can
+    // activate (to avoid accidental activations while typing)
+    &zip_temp_layer {
+      require-prior-idle-ms = <250>;
+    };
+
     &mouse_ps2_input_listener {
+      input-processors =
+        // Adjust pointing device axes.
+        // This adjusts the values inside the zmk driver. Some
+        // trackpoints also allow you to adjust it in their firmware. Check
+        // the driver options below for more info.
+        // <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
 
-      // Adjust pointing device axes.
-      // This adjusts the values inside the zmk driver. Some
-      // trackpoints also allow you to adjust it in their firmware. Check
-      // the driver options below for more info.
-      // xy-swap;
-      // x-invert;
-      // y-invert;
-
-      // Set the layer that should automatically activate when the mouse is
-      // moving.
-      layer-toggle = <MOUSE_TP>;
-
-      // How long the mouse needs to move for before the layer is activated (to
-      // avoid accidental activations while typing) (Default: 250)
-      layer-toggle-delay-ms = <250>;
-
-      // How long to wait, after the last mouse movement, before deactivating
-      // the layer (Default: 250)
-      layer-toggle-timeout-ms = <250>;
+        // Activate this layer while the mouse is moving and deactivate it
+        // after the timeout (in ms) since the last mouse movement.
+        <&zip_temp_layer MOUSE_TP 250>;
     };
 
 
