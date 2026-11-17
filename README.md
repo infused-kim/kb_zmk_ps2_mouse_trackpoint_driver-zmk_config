@@ -112,7 +112,7 @@ You can then copy these settings into your config.
 
 ![Keymap Image](keymap_img/keymap.svg)
 
-The image was generated using [caksoylar's awesome keymap-drawer](https://github.com/caksoylar/keymap-drawer) and you can update it using the shell script in [./keymap_img/](keymap_img/).
+The image was generated using [caksoylar's awesome keymap-drawer](https://github.com/caksoylar/keymap-drawer) and you can update it with `just draw` (see [4. Building locally](#4-building-locally)). The keymap-drawer settings are in [keymap_img/keymap_config.yaml](keymap_img/keymap_config.yaml).
 
 ## 4. Building locally
 
