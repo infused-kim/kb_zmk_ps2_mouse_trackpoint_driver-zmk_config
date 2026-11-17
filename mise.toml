@@ -20,6 +20,8 @@ ninja = "latest"
 just = "latest"
 # mikefarah/yq, used to read build.yaml
 yq = "latest"
+# Provides the `keymap` command for `just draw`
+"pypi:keymap-drawer" = "latest"
 
 # Zephyr SDK. Use the same version as ZMK's CI build container, so local
 # builds match GitHub Actions. Update it together with the ZMK `revision` in

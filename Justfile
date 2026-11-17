@@ -176,6 +176,26 @@ _targets:
     ] | @tsv' "{{ root }}/build.yaml"
 
 #
+# Keymap
+#
+
+# Draw the keymap into keymap_img/keymap.svg
+[group("keymap")]
+draw:
+    #!/usr/bin/env -S mise exec -- bash
+    set -euo pipefail
+    cd "{{ root }}"
+    # Write to temp files first, so a failed run doesn't leave an empty keymap.svg
+    tmp=$(mktemp -d)
+    trap 'rm -rf "$tmp"' EXIT
+    keymap -c keymap_img/keymap_config.yaml parse -c 12 -z config/corne_tp.keymap > "$tmp/keymap.yaml"
+    keymap -c keymap_img/keymap_config.yaml draw --qmk-keyboard crkbd/rev1 --layout-name LAYOUT_split_3x6_3 \
+        "$tmp/keymap.yaml" > "$tmp/keymap.svg"
+    mv "$tmp/keymap.yaml" keymap_img/keymap.yaml
+    mv "$tmp/keymap.svg" keymap_img/keymap.svg
+    echo "Wrote keymap_img/keymap.svg"
+
+#
 # Other
 #
 
