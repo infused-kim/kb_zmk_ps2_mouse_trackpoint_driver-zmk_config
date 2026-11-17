@@ -4,7 +4,7 @@ manifest:
   # When upgrading ZMK, update the `revision` below together with the
   # `@<ref>` of build-user-config.yml in .github/workflows/build.yml.
   defaults:
-    revision: v0.3
+    revision: main
 
   remotes:
     - name: zmkfirmware

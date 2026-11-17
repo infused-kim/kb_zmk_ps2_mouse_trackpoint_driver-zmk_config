@@ -18,10 +18,10 @@
 #
 ---
 include:
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_tp_left
     snippet: zmk-usb-logging
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_tp_right
     snippet: zmk-usb-logging
 
@@ -31,11 +31,11 @@ include:
   # uses the high frequency pins D1 for SCL and D2 for SDA.
   #
   # You can remove this entry in your own zmk-config.
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_tp_right
     snippet: zmk-usb-logging
     cmake-args: -DDTS_EXTRA_CPPFLAGS=-DMOUSE_PS2_ALT_PINS
-    artifact-name: corne_tp_right-nice_nano_v2-scl_D1_sda_D0-zmk
+    artifact-name: corne_tp_right-nice_nano_zmk-scl_D1_sda_D0-zmk
 
   # Settings Reset firmware
   # This will build a firmware that can wipe all settings from your
@@ -44,5 +44,5 @@ include:
   #
   # More info:
   # https://zmk.dev/docs/troubleshooting#split-keyboard-halves-unable-to-pair
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: settings_reset
