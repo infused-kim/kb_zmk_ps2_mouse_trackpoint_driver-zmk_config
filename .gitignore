@@ -2,4 +2,12 @@
 .DS_Store
 
 # Temporary files
-keymap_img/keymap.yaml
+/keymap_img/keymap.yaml
+
+# Local build dirs
+/.zmk/
+/.build/
+/firmware/
+
+# Local mise overrides, e.g. ZMK_LOCAL_MODULES (see mise.local.toml.example)
+/mise.local.toml
