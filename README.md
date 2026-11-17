@@ -15,7 +15,9 @@ You can also learn more in the README of the [driver module repo](https://github
     - [1.2. High-frequency pins, but NOT compatible with all Corne variations](#12-high-frequency-pins-but-not-compatible-with-all-corne-variations)
 - [2. How to adjust Tackpoint settings](#2-how-to-adjust-tackpoint-settings)
 - [3. Keymap](#3-keymap)
-- [4. Related Resources](#4-related-resources)
+- [4. Building locally](#4-building-locally)
+    - [4.1. Use a local checkout of the module](#41-use-a-local-checkout-of-the-module)
+- [5. Related Resources](#5-related-resources)
 
 ## 1. Pre-built firmware
 
@@ -112,7 +114,58 @@ You can then copy these settings into your config.
 
 The image was generated using [caksoylar's awesome keymap-drawer](https://github.com/caksoylar/keymap-drawer) and you can update it using the shell script in [./keymap_img/](keymap_img/).
 
-## 4. Related Resources
+## 4. Building locally
+
+GitHub Actions builds the firmware on every push, so you don't need this. But
+building locally is faster when you change your config often.
+
+The toolchain (Python, CMake, the Zephyr SDK, keymap-drawer, ...) is managed
+by [mise](https://mise.jdx.dev) and the recipes by
+[just](https://github.com/casey/just), see [mise.toml](mise.toml) and
+[Justfile](Justfile).
+
+```bash
+# Install the tools and set up the west workspace in .zmk/ (once)
+mise install
+just init
+
+# Show all recipes
+just help
+
+# Show all build targets from build.yaml
+just list
+
+# Build all targets, or the ones whose name contains a filter
+just build
+just build corne_tp_right
+
+# Redraw keymap_img/keymap.svg
+just draw
+```
+
+The firmware is written to `firmware/`. Run `just update` after you change
+`config/west.yml`.
+
+### 4.1. Use a local checkout of a module
+
+To build with your own checkout of a module instead of
+the revision in `config/west.yml`:
+
+```bash
+# Copy the example file and point it to your checkout
+cp mise.local.toml.example mise.local.toml
+
+# Show the module overrides
+just local-modules
+
+# Clean the build dir after changing modules
+just clean
+just build
+```
+
+This only affects local builds. GitHub Actions always uses `config/west.yml`.
+
+## 5. Related Resources
 
 - [My personal, more advanced zmk-config](https://github.com/infused-kim/zmk-config)
 - [PS/2 Mouse & TrackPoint driver module for zmk](https://github.com/infused-kim/kb_zmk_ps2_mouse_trackpoint_driver)
