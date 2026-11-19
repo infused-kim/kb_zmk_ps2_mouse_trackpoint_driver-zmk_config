@@ -4,6 +4,7 @@
   #include <behaviors/mouse_keys.dtsi>
   #include <behaviors/mouse_setting.dtsi>
   #include <input/processors.dtsi>
+  #include <input/processors/temp_layer_delayed.dtsi>
   #include <dt-bindings/zmk/input_transform.h>
 
  /*
@@ -79,10 +80,22 @@
     // Uses ZMK's input processors. See:
     // https://zmk.dev/docs/keymaps/input-processors
 
-    // Require this much time since the last key press before the layer can
-    // activate (to avoid accidental activations while typing)
-    &zip_temp_layer {
-      require-prior-idle-ms = <250>;
+    // `&zip_temp_layer_delayed` is the PS/2 mouse driver's copy of ZMK's
+    // `&zip_temp_layer` with the added `require-movement-ms` option.
+    &zip_temp_layer_delayed {
+
+      // This option is included in the upstream zmk input processor. It
+      // prevents the activation of the layer if a key was pressed within the
+      // last 500ms.
+      require-prior-idle-ms = <500>;
+
+      // However, frequently that's not enough if you use a Trackpoint that's
+      // mounted between keys because sometimes you bump it _before_ you type
+      // something.
+      //
+      // So, the PS/2 driver adds this option that requires continuous
+      // movement for at least 250ms before the temp layer activates.
+      require-movement-ms = <250>;
     };
 
     &mouse_ps2_input_listener {
@@ -95,7 +108,7 @@
 
         // Activate this layer while the mouse is moving and deactivate it
         // after the timeout (in ms) since the last mouse movement.
-        <&zip_temp_layer MOUSE_TP 250>;
+        <&zip_temp_layer_delayed MOUSE_TP 250>;
     };
 
 
